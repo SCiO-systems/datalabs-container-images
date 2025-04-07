@@ -1,5 +1,5 @@
-gdal=3.9.3
-libgdal-arrow-parquet=3.9.3
+gdal==3.9.3
+libgdal-arrow-parquet==3.9.3
 pyproj 
 rasterio 
 xarray 
