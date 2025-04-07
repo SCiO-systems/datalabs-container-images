@@ -1,3 +1,12 @@
+library(gitcreds)
+library(withr)
+
+# Set your GitHub token as an environment variable
+with_envvar(
+  c(GITHUB_PAT = Sys.getenv("GITHUB_PAT")), 
+  gitcreds_set()
+)
+
 install.packages(c('devtools', 'raster', 'shapefiles', 'ncdf4', 'terra', 'geodata',
                     'spatstat.geom', 'ggmap', 'rgee', 'leaflet', 'dismo', 'gdalUtilities',
                     'circlize', 'diagis', 'ggnewscale', 'lmerTest', 'lme4', 'metafor',
