@@ -1,0 +1,6 @@
+gdal
+pyproj 
+rasterio 
+xarray 
+cdsapi
+nb_conda_kernels
