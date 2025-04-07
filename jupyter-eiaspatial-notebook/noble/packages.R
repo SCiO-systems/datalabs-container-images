@@ -20,5 +20,4 @@ devtools::install_github(c("CIAT-DAPA/analogues",
                    "SantanderMetGroup/downscaleR",
                    "SantanderMetGroup/convertR",
                    "SantanderMetGroup/climate4R.indices",
-                   "bakaburg1/BaySREn",
-                   "femiguez/apsimx"))
+                   "bakaburg1/BaySREn"))
