@@ -17,9 +17,6 @@ jobs:
     runs-on: "self-hosted"
     if: startsWith(github.ref, 'refs/heads/develop')
 
-    env:
-      GITHUB_PAT: ${{ secrets.GH_PAT }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -50,7 +47,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/jupyter-eiaspatial-notebook:dev-noble-${{ secrets.JUPYTER_EIASPATIAL_NOTEBOOK_RELEASE_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args:
+          build-args: |
             - GITHUB_PAT=${{ secrets.GH_PAT }}
             
   build_and_push_prod:
