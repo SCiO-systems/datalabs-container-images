@@ -56,6 +56,9 @@ RUN pip install jupyter-archive
 ### R packages installation
 COPY . .
 
+ARG GITHUB_PAT
+ENV GITHUB_PAT=${GITHUB_PAT}
+
 RUN sudo Rscript packages.R
 
 ### Python packages installation
