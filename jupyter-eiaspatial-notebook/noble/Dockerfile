@@ -59,7 +59,7 @@ COPY . .
 RUN sudo Rscript packages.R
 
 ### Python packages installation
-RUN conda install -c conda-forge --file requirements.txt -y
+RUN conda install -c conda-forge --file requirements.txt --solver=classic -y
 
 ### Copying .bashrc of default $HOME directory to /opt
 RUN sudo cp .bashrc /opt/
