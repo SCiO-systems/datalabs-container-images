@@ -1,4 +1,4 @@
-install.packages(c('gitcreds','withr','devtools', 'raster', 'shapefiles', 'ncdf4', 'terra', 'geodata',
+install.packages(c('devtools', 'raster', 'shapefiles', 'ncdf4', 'terra', 'geodata',
                     'spatstat.geom', 'ggmap', 'rgee', 'leaflet', 'dismo', 'gdalUtilities',
                     'circlize', 'diagis', 'ggnewscale', 'lmerTest', 'lme4', 'metafor',
                     'metan', 'pbapply', 'FactoMineR', 'doParallel', 'ggpubr', 'broom',
@@ -10,15 +10,6 @@ install.packages(c('gitcreds','withr','devtools', 'raster', 'shapefiles', 'ncdf4
     dependencies=TRUE,
     repos='http://cran.rstudio.com/',
     Ncpus = 4)
-
-library(gitcreds)
-library(withr)
-
-# Set your GitHub token as an environment variable
-with_envvar(
-  c(GITHUB_PAT = Sys.getenv("GITHUB_PAT")), 
-  gitcreds_set()
-)
 
 devtools::install_github(c("CIAT-DAPA/analogues",
                    "SantanderMetGroup/loadeR.java",
