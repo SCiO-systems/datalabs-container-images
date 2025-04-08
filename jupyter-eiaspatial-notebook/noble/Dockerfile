@@ -9,7 +9,9 @@ USER jovyan
 
 ### OS Packages installation
 RUN sudo apt-get update && sudo apt-get install aptitude gdebi-core curl wget tar build-essential cmake make default-jre default-jdk cron screen pkg-config protobuf-compiler \
-    libfontconfig1-dev libgsl-dev libudunits2-dev libprotobuf-dev libjq-dev libmagick++-dev gfortran libxml2-dev libcurl4-openssl-dev libfontconfig1-dev libssl-dev libsodium-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgmp3-dev libmpfr-dev libarchive-dev gnupg software-properties-common dirmngr rsync -y
+    libfontconfig1-dev libgsl-dev libudunits2-dev libprotobuf-dev libjq-dev libmagick++-dev gfortran libxml2-dev libcurl4-openssl-dev libfontconfig1-dev libssl-dev \ 
+    libsodium-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgmp3-dev libmpfr-dev libarchive-dev gnupg software-properties-common \ 
+    dirmngr rsync libfftw3-dev -y
 
 ### GDAL installation (unstable repo)
 RUN sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable

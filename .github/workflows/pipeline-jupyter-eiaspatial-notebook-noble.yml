@@ -47,8 +47,6 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/jupyter-eiaspatial-notebook:dev-noble-${{ secrets.JUPYTER_EIASPATIAL_NOTEBOOK_RELEASE_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            - GITHUB_PAT=${{ secrets.GH_PAT }}
             
   build_and_push_prod:
     runs-on: "self-hosted"
