@@ -85,32 +85,20 @@ RUN cp -r /opt/DSSAT/v4.8.1.40/dssat-csm-data/* /opt/DSSAT/v4.8.1.40
 RUN sed -i 's,/usr/local,opt/DSSAT/v4.8.1.40,g' /opt/DSSAT/v4.8.1.40/DSSATPRO.L48
 RUN chown -R jovyan:users /opt/DSSAT/v4.8.1.40/*
 
+COPY . .
+
 # ApsimX
 RUN sudo apt-get update && sudo apt-get install libsqlite3-dev dotnet-sdk-8.0 gtk-sharp3 libgtksourceview-4-0 zenity -y
-COPY ./apsim-7719.deb ./apsim-7719.deb
 RUN sudo dpkg -i apsim-7719.deb
 
 ### Jupyter extensions & plugins installation
-RUN pip install aquirdturtle_collapsible_headings==3.1.0
-RUN pip install jupyterlab-spellchecker
-RUN pip install --upgrade jupyterlab jupyterlab-git
-RUN pip install jupyterlab_code_formatter
-RUN pip install lckr-jupyterlab-variableinspector
-RUN pip install jupyterlab_execute_time
-RUN pip install jupyterlab-hide-code
-RUN pip install 'jupyterlab>=3.0.0,<4.0.0a0' jupyterlab-lsp
-RUN pip install jupyterlab-geojson
-RUN pip install jupyterlab-fasta
-RUN pip install jupyterlab-drawio
-RUN pip install jupyter-archive
+RUN pip install --no-cache-dir -r jupyter.requirements.txt
 
 ### R packages installation
-COPY . .
-
 RUN sudo Rscript packages.R
 
 ### Python packages installation
-RUN conda install -c conda-forge --file requirements.txt --solver=classic -y
+RUN conda install -c conda-forge --file conda.requirements.txt --solver=classic -y
 
 ### Copying .bashrc of default $HOME directory to /opt
 RUN sudo cp .bashrc /opt/
