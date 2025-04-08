@@ -91,7 +91,7 @@ COPY ./apsim-7719.deb ./apsim-7719.deb
 RUN sudo dpkg -i apsim-7719.deb
 
 ### Jupyter extensions & plugins installation
-RUN pip install aquirdturtle_collapsible_headings
+RUN pip install aquirdturtle_collapsible_headings==3.1.0
 RUN pip install jupyterlab-spellchecker
 RUN pip install --upgrade jupyterlab jupyterlab-git
 RUN pip install jupyterlab_code_formatter
