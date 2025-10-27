@@ -89,7 +89,7 @@ COPY . .
 
 # ApsimX
 RUN sudo apt-get update && sudo apt-get install libsqlite3-dev dotnet-sdk-8.0 gtk-sharp3 libgtksourceview-4-0 zenity -y
-RUN sudo dpkg -i apsim-7719.deb
+RUN sudo dpkg -i apsim-*.deb
 
 ### Jupyter extensions & plugins installation
 RUN pip install --no-cache-dir -r jupyter.requirements.txt
