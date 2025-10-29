@@ -94,11 +94,12 @@ RUN sudo dpkg -i apsim-*.deb
 ### Jupyter extensions & plugins installation
 RUN pip install --no-cache-dir -r jupyter.requirements.txt
 
+### Python packages installation
+RUN conda update --all -y
+RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
+
 ### R packages installation
 RUN sudo Rscript packages.R
-
-### Python packages installation
-RUN conda install -c conda-forge --file conda.requirements.txt --solver=classic -y
 
 ### Copying .bashrc of default $HOME directory to /opt
 RUN sudo cp .bashrc /opt/

@@ -1,7 +1,6 @@
-gdal==3.9.3
-libgdal-arrow-parquet==3.9.3
+gdal
+libgdal-arrow-parquet
 pyproj 
 rasterio 
 xarray 
 cdsapi
-nb_conda_kernels
