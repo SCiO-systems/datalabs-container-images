@@ -1,0 +1,6 @@
+gdal
+libgdal-arrow-parquet
+pyproj 
+rasterio 
+xarray 
+cdsapi
