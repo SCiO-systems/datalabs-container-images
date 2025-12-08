@@ -11,7 +11,7 @@ USER jovyan
 RUN sudo apt-get update && sudo apt-get install aptitude gdebi-core curl wget tar build-essential cmake make default-jre default-jdk cron screen pkg-config protobuf-compiler \
     libfontconfig1-dev libgsl-dev libudunits2-dev libprotobuf-dev libjq-dev libmagick++-dev gfortran libxml2-dev libcurl4-openssl-dev libfontconfig1-dev libssl-dev \ 
     libsodium-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgmp3-dev libmpfr-dev libarchive-dev gnupg software-properties-common \ 
-    dirmngr rsync libfftw3-dev -y
+    dirmngr rsync libfftw3-dev libtirpc-dev -y
 
 ### GDAL installation (unstable repo)
 RUN sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
@@ -24,14 +24,14 @@ RUN sudo echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packa
 RUN sudo aptitude install nco -y
 
 ### R installation
-RUN sudo apt update -qq
-RUN sudo apt install --no-install-recommends software-properties-common dirmngr
+RUN sudo apt-get update -qq
+RUN sudo apt-get install --no-install-recommends software-properties-common dirmngr
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
-RUN sudo apt install --no-install-recommends r-base -y
+RUN sudo apt-get install --no-install-recommends r-base -y
 
 ### Rstudio Server installation
-RUN sudo apt --fix-broken install -y
+RUN sudo apt-get --fix-broken install -y
 RUN sudo apt-get install gdebi-core -y
 RUN wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.12.1-563-amd64.deb && sudo gdebi rstudio-server-2024.12.1-563-amd64.deb -n
 
