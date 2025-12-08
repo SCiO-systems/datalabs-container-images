@@ -15,7 +15,7 @@ RUN sudo apt-get update && sudo apt-get install aptitude gdebi-core curl wget ta
 
 ### GDAL installation (unstable repo)
 RUN sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-RUN sudo apt-get update && sudo apt-get install libgdal-dev libgeos-dev libproj-dev -y
+RUN sudo apt-get update && sudo apt-get install libgdal-dev libgeos-dev libproj-dev libnetcdf-dev libhdf5-dev -y
 
 ### gsutil installation
 RUN sudo echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && sudo apt-get update -y && sudo apt-get install google-cloud-cli -y
@@ -95,9 +95,13 @@ RUN sudo dpkg -i apsim-*.deb
 RUN pip install --no-cache-dir -r jupyter.requirements.txt
 
 ### Python packages installation
-RUN conda update --all -y
-RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
-
+# RUN conda update --all -y
+# RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
+RUN mamba install -c conda-forge --file conda.requirements.txt cdsapi -y
+# Do NOT "update --all" – it breaks the base env and pins
+# Just install the extra stuff we care about using mamba
+RUN mamba install -c conda-forge libgdal netcdf4 libnetcdf hdf5 --force-reinstall --strict-channel-priority -y
+RUN mamba clean -afy
 ### R packages installation
 RUN sudo Rscript packages.R
 
