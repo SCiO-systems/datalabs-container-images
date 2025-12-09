@@ -11,11 +11,11 @@ USER jovyan
 RUN sudo apt-get update && sudo apt-get install aptitude gdebi-core curl wget tar build-essential cmake make default-jre default-jdk cron screen pkg-config protobuf-compiler \
     libfontconfig1-dev libgsl-dev libudunits2-dev libprotobuf-dev libjq-dev libmagick++-dev gfortran libxml2-dev libcurl4-openssl-dev libfontconfig1-dev libssl-dev \ 
     libsodium-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgmp3-dev libmpfr-dev libarchive-dev gnupg software-properties-common \ 
-    dirmngr rsync libfftw3-dev -y
+    dirmngr rsync libfftw3-dev libtirpc-dev -y
 
 ### GDAL installation (unstable repo)
 RUN sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-RUN sudo apt-get update && sudo apt-get install libgdal-dev libgeos-dev libproj-dev -y
+RUN sudo apt-get update && sudo apt-get install libgdal-dev libgeos-dev libproj-dev libnetcdf-dev libhdf5-dev -y
 
 ### gsutil installation
 RUN sudo echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && sudo apt-get update -y && sudo apt-get install google-cloud-cli -y
@@ -24,14 +24,14 @@ RUN sudo echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packa
 RUN sudo aptitude install nco -y
 
 ### R installation
-RUN sudo apt update -qq
-RUN sudo apt install --no-install-recommends software-properties-common dirmngr
+RUN sudo apt-get update -qq
+RUN sudo apt-get install --no-install-recommends software-properties-common dirmngr
 RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
 RUN sudo add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
-RUN sudo apt install --no-install-recommends r-base -y
+RUN sudo apt-get install --no-install-recommends r-base -y
 
 ### Rstudio Server installation
-RUN sudo apt --fix-broken install -y
+RUN sudo apt-get --fix-broken install -y
 RUN sudo apt-get install gdebi-core -y
 RUN wget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2024.12.1-563-amd64.deb && sudo gdebi rstudio-server-2024.12.1-563-amd64.deb -n
 
@@ -95,9 +95,13 @@ RUN sudo dpkg -i apsim-*.deb
 RUN pip install --no-cache-dir -r jupyter.requirements.txt
 
 ### Python packages installation
-RUN conda update --all -y
-RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
-
+# RUN conda update --all -y
+# RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
+RUN mamba install -c conda-forge --file conda.requirements.txt cdsapi -y
+# Do NOT "update --all" – it breaks the base env and pins
+# Just install the extra stuff we care about using mamba
+RUN mamba install -c conda-forge libgdal netcdf4 libnetcdf hdf5 --force-reinstall --strict-channel-priority -y
+RUN mamba clean -afy
 ### R packages installation
 RUN sudo Rscript packages.R
 
