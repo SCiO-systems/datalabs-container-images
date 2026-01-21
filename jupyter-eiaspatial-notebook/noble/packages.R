@@ -9,7 +9,7 @@ install.packages(c('devtools', 'raster', 'shapefiles', 'ncdf4', 'terra', 'geodat
                     'envirem', 'maps', 'dplyr', 'DSSAT', 'rworldmap'),
     dependencies=TRUE,
     repos='http://cran.rstudio.com/',
-    Ncpus = 4)
+    Ncpus = 1)
 
 devtools::install_github(c("CIAT-DAPA/analogues",
                    "SantanderMetGroup/loadeR.java",

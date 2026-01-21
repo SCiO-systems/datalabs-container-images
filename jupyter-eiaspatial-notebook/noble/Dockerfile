@@ -85,24 +85,28 @@ RUN cp -r /opt/DSSAT/v4.8.1.40/dssat-csm-data/* /opt/DSSAT/v4.8.1.40
 RUN sed -i 's,/usr/local,opt/DSSAT/v4.8.1.40,g' /opt/DSSAT/v4.8.1.40/DSSATPRO.L48
 RUN chown -R jovyan:users /opt/DSSAT/v4.8.1.40/*
 
-COPY . .
+# COPY . .
 
 # ApsimX
 RUN sudo apt-get update && sudo apt-get install libsqlite3-dev dotnet-sdk-8.0 gtk-sharp3 libgtksourceview-4-0 zenity -y
+COPY apsim-7899.deb ./
 RUN sudo dpkg -i apsim-*.deb
 
 ### Jupyter extensions & plugins installation
+COPY jupyter.requirements.txt ./
 RUN pip install --no-cache-dir -r jupyter.requirements.txt
 
 ### Python packages installation
 # RUN conda update --all -y
 # RUN conda install -c conda-forge --file conda.requirements.txt --solver=libmamba -y
+COPY conda.requirements.txt ./
 RUN mamba install -c conda-forge --file conda.requirements.txt cdsapi -y
 # Do NOT "update --all" – it breaks the base env and pins
 # Just install the extra stuff we care about using mamba
 RUN mamba install -c conda-forge libgdal netcdf4 libnetcdf hdf5 --force-reinstall --strict-channel-priority -y
 RUN mamba clean -afy
 ### R packages installation
+COPY packages.R ./
 RUN sudo Rscript packages.R
 
 ### Copying .bashrc of default $HOME directory to /opt
@@ -110,3 +114,7 @@ RUN sudo cp .bashrc /opt/
 
 ### Copying bash scripts to startup notebook directory
 COPY scripts/* /usr/local/bin/start-notebook.d/
+
+COPY odc_setup.sh ./
+RUN sudo chown jovyan:users odc_setup.sh && chmod +x odc_setup.sh
+RUN ./odc_setup.sh
